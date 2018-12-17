@@ -13,3 +13,9 @@ export type JsonFormatter = ((json: JSON) => string);
  * Function to parse json object from string
  */
 export type JsonParser = ((s: string) => JSON);
+
+/**
+ * Definition of any type
+ */
+// tslint:disable-next-line: no-any // explicitely define any type
+export type anyType = any;

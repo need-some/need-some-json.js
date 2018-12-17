@@ -1,5 +1,9 @@
 # need-some-json.js
 [![Build Status](https://travis-ci.org/need-some/need-some-json.js.svg?branch=master)](https://travis-ci.org/need-some/need-some-json.js)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![npm version](https://badge.fury.io/js/%40need-some%2Fjson.svg)](https://badge.fury.io/js/%40need-some%2Fjson)
+[![need-some/json](https://img.shields.io/badge/need--some-json-ff69b4.svg)](https://www.npmjs.com/org/need-some)
+[![Dependencies](https://david-dm.org/need-some/need-some-json.js/status.svg)](https://david-dm.org/need-some/need-some-json.js)
 
 _need-some_ is a collection of small yet useful functions.
 The json package provides typed json binding
@@ -10,6 +14,9 @@ Simply install as dependency
 	npm install @need-some/json --save
 
 ### Usage
+
+Use JsonConverter to translate json strings to typed objects(using the concrete classes) and back.
+The Json annotations cannot type check its annotated members, so it must be defined carefully. 
 
 #### Create a converter
 
@@ -43,11 +50,29 @@ Simple annotation denoting an element to be a json element. Optional, if no rena
 	@JsonElement('nameInJson')
 	nameInObj: string;
 
+##### @JsonNull
+Define member to be nullable. The json representation is the "null" json value
+
+	@JsonNull()
+	nember: string | null;
+
+##### @JsonOptional
+Define member to be optional. The json will not contain the key if the object representation is undefined.
+
+	@JsonOptional()
+	nember?: string;
+
 ##### @JsonChild
 Define class of member to delegate to new JsonConverter for the given class.
 
 	@JsonChild(ChildClass)
-	nameInObj: ChildClass;
+	child: ChildClass;
+
+##### @JsonEnum
+Define enum type of member. The Json representation is the string key.
+
+	@JsonEnum(Enum)
+	nember: Enum;
 
 ##### @JsonDiscriminator
 Mark member to be the discriminator member of a super class. Should be used on string members.

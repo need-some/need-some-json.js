@@ -1,6 +1,6 @@
 import { toBeSameJsonMatcher, xexpect } from '@need-some/test';
 import { JsonObjectMarshaller } from '../module/jsonobject.marshaller';
-import { AbstractTo, TestObj, TestChild, TestObj2 } from './testobj.to.mock.spec';
+import { AbstractTo, TestObj, TestChild, TestObj2, ValueEnum, NamedEnum } from './testobj.to.mock.spec';
 import { Color } from '@need-some/basic/types';
 import { asArray } from '@need-some/basic';
 
@@ -76,6 +76,36 @@ describe('JsonObjectMarshaller', () => {
 			_type: 'T1',
 			id: 77,
 			name: 'parent',
+			mycolor: null
+		};
+		const sut = new JsonObjectMarshaller(TestObj);
+		const result = sut.marshal(input);
+		xexpect(result).toBeSameJson(expected);
+	});
+	it('marshal json with string enum', () => {
+		const input = new TestObj();
+		input.id = 77;
+		input.color = null;
+		input.valueEnum = ValueEnum.DEF;
+		const expected = {
+			_type: 'T1',
+			id: 77,
+			valueEnum: 'DEF',
+			mycolor: null
+		};
+		const sut = new JsonObjectMarshaller(TestObj);
+		const result = sut.marshal(input);
+		xexpect(result).toBeSameJson(expected);
+	});
+	it('marshal json with named enum', () => {
+		const input = new TestObj();
+		input.id = 77;
+		input.color = null;
+		input.namedEnum = NamedEnum.JKL;
+		const expected = {
+			_type: 'T1',
+			id: 77,
+			namedEnum: 'JKL',
 			mycolor: null
 		};
 		const sut = new JsonObjectMarshaller(TestObj);
@@ -166,7 +196,7 @@ describe('JsonObjectMarshaller', () => {
 		const result = sut.marshal(input);
 		xexpect(result).toBeSameJson(expected);
 	});
-	it('unmarshal json array', () => {
+	it('marshal json array', () => {
 		const input = [new TestObj(), new TestObj()];
 		input[0].color = new Color(255, 204, 0, 255);
 		input[1].color = new Color(255, 204, 0, 128);
@@ -184,7 +214,7 @@ describe('JsonObjectMarshaller', () => {
 		const result = sut.marshal(input);
 		xexpect(result).toBeSameJson(expected);
 	});
-	it('unmarshal json multitype array', () => {
+	it('marshal json multitype array', () => {
 		const input = [new TestObj(), new TestObj2()];
 		(<TestObj>input[0]).color = new Color(255, 204, 0, 255);
 		(<TestObj2>input[1]).text = 'ignored text';
@@ -201,7 +231,7 @@ describe('JsonObjectMarshaller', () => {
 		const result = sut.marshal(input);
 		xexpect(result).toBeSameJson(expected);
 	});
-	it('unmarshal json one item array', () => {
+	it('marshal json one item array', () => {
 		const input = [new TestObj()];
 		input[0].color = new Color(255, 204, 0, 255);
 		const expected = [
@@ -214,7 +244,7 @@ describe('JsonObjectMarshaller', () => {
 		const result = sut.marshal(input);
 		xexpect(result).toBeSameJson(expected);
 	});
-	it('unmarshal empty json array', () => {
+	it('marshal empty json array', () => {
 		const input = [];
 		const expected = [];
 		const sut = new JsonObjectMarshaller(asArray(TestObj));

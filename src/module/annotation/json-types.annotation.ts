@@ -2,17 +2,12 @@ import 'reflect-metadata';
 import { Metadata } from './metadata.type';
 import { AnnotationProcessor } from './annotation-processor';
 import { ScalarConstructor } from '@need-some/basic';
+import { anyType } from '../types';
 
 /**
  * Key of the annotation
  */
 const formatMetadataKey = 'annotations.JsonTypes';
-
-/**
- * the annotation can define any type
- */
-// tslint:disable-next-line: no-any // the annotation can define any type
-export type anyType = any;
 
 /**
  * List all subclasses of the given class. Given as function, so declaration before the actual child classes is possible

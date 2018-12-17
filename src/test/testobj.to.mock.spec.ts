@@ -1,4 +1,5 @@
 import { JsonElement } from '../module/annotation/json-element.annotation';
+import { JsonEnum } from '../module/annotation/json-enum.annotation';
 import { JsonArray } from '../module/annotation/json-array.annotation';
 import { JsonChild } from '../module/annotation/json-child.annotation';
 import { JsonNull } from '../module/annotation/json-null.annotation';
@@ -43,6 +44,21 @@ export class TestChild extends AbstractTo {
 	children: TestChild[];
 }
 
+export enum ValueEnum {
+	ABC = 'ABC',
+	DEF = 'DEF'
+}
+
+export enum NamedEnum {
+	GHI,
+	JKL
+}
+
+export enum NumberEnum {
+	MNO = 1,
+	PQR = 2
+}
+
 @JsonDiscriminatorValue('T1')
 export class TestObj extends AbstractTo {
 	@JsonElement()
@@ -55,6 +71,21 @@ export class TestObj extends AbstractTo {
 	@JsonTransform(ColorConverter)
 	@JsonNull()
 	color: Color | null;
+
+	@JsonElement()
+	@JsonEnum(ValueEnum)
+	@JsonOptional()
+	valueEnum?: ValueEnum;
+
+	@JsonElement()
+	@JsonEnum(NamedEnum)
+	@JsonOptional()
+	namedEnum?: NamedEnum;
+
+	@JsonElement()
+	@JsonEnum(NumberEnum)
+	@JsonOptional()
+	numberEnum?: NumberEnum;
 
 	@JsonElement()
 	@JsonTransform(PrefixConverterFactory, 'foo ')
