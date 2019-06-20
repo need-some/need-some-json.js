@@ -1,6 +1,6 @@
 {
 	"name": "@need-some/json",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "json binding",
 	"main": "index.js",
 	"types": "index.d.ts",
@@ -20,13 +20,13 @@
 	},
 	"devDependencies": {
 		"@need-some/test": "0.0.18",
-		"@types/jasmine": "^2.8.12",
+		"@types/jasmine": "^3.3.13",
 		"create-ts-index": "^1.0.14",
 		"jasmine-core": "^3.3.0",
 		"karma": "^4.1.0",
 		"karma-chrome-launcher": "^2.2.0",
 		"karma-coverage-istanbul-reporter": "^2.0.4",
-		"karma-jasmine": "^1.1.2",
+		"karma-jasmine": "^2.0.1",
 		"karma-jasmine-html-reporter": "^1.4.0",
 		"karma-typescript": "^4.1.0",
 		"prettier": "^1.15.3",
