@@ -68,7 +68,11 @@ export class AnnotationProcessor {
 	 * @returns class name
 	 */
 	private static getClassName(prototype: anyAnnotatedObject): string {
-		return prototype.constructor.name;
+		if (prototype.constructor.__JSON__CLASSNAME) {
+			return prototype.constructor.__JSON__CLASSNAME;
+		} else {
+			return prototype.constructor.name;
+		}
 	}
 
 	/**
@@ -102,7 +106,7 @@ export class AnnotationProcessor {
 		const decoratedResult = (target, propertyKey) => {
 			if (propertyKey !== undefined) {
 				// undefined propertyKey shows annotation is declared on class
-				AnnotationProcessor.cacheMember(target.constructor.name, propertyKey, inverseName);
+				AnnotationProcessor.cacheMember(AnnotationProcessor.getClassName(target), propertyKey, inverseName);
 			} else {
 				if (target.annotationMetadata === undefined) {
 					target.annotationMetadata = {};
@@ -154,15 +158,12 @@ export class AnnotationProcessor {
 	 * annotations on the type. Additional present members in the given object are ignored.
 	 * The members are returned from the perspective of the class, not the json member names.
 	 * @param type the type to check
-	 * @param obj the instance to process
-	 * @param inverse if true, the given object is treated as json object. members of the object are renamed to the type names.
 	 * @returns list of member names.
 	 */
-	static getMembers<T>(type: ScalarConstructor<T>, obj: anyAnnotatedObject, inverse: boolean): ReadonlyArray<string> {
+	static getMembers<T>(type: ScalarConstructor<T>): ReadonlyArray<string> {
 		const instance = new type();
 		// tslint:disable-next-line: no-any // a constructor has a name
-		const constructor = <any>instance.constructor;
-		const typename = constructor.name;
+		const typename = AnnotationProcessor.getClassName(instance);
 		if (!AnnotationProcessor.memberprocessed[typename]) {
 			AnnotationProcessor.getClassNames(instance)
 				.filter(classname => AnnotationProcessor.membercache[classname] !== undefined)

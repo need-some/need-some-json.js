@@ -37,7 +37,12 @@ export class AbstractTo {
 export class TestChild extends AbstractTo {
 	@JsonElement()
 	@JsonOptional()
-	name: string;
+	childname: string;
+
+	@JsonElement('age')
+	@JsonOptional()
+	childage: number;
+
 	@JsonChild(TestChild)
 	@JsonOptional()
 	@JsonArray()

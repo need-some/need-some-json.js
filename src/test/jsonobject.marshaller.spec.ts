@@ -11,7 +11,8 @@ describe('JsonObjectMarshaller', () => {
 		input.name = 'parent';
 		input.child = new TestChild();
 		input.child.id = 123;
-		input.child.name = 'child';
+		input.child.childname = 'child';
+		input.child.childage = 5;
 		input.color = new Color(255, 204, 0, 255);
 		const expected = {
 			_type: 'T1',
@@ -20,7 +21,8 @@ describe('JsonObjectMarshaller', () => {
 			child: {
 				_type: 'TC',
 				id: 123,
-				name: 'child'
+				childname: 'child',
+				age: 5
 			},
 			mycolor: '#ffcc00'
 		};
@@ -34,7 +36,8 @@ describe('JsonObjectMarshaller', () => {
 		input.name = 'parent';
 		input.child = new TestChild();
 		input.child.id = 123;
-		input.child.name = 'child';
+		input.child.childname = 'child';
+		input.child.childage = 5;
 		input.color = new Color(255, 204, 0, 255);
 		const expected = {
 			_type: 'T1',
@@ -43,7 +46,8 @@ describe('JsonObjectMarshaller', () => {
 			child: {
 				_type: 'TC',
 				id: 123,
-				name: 'child'
+				childname: 'child',
+				age: 5
 			},
 			mycolor: '#ffcc00'
 		};
@@ -144,10 +148,12 @@ describe('JsonObjectMarshaller', () => {
 		input.name = 'parent';
 		input.child = new TestChild();
 		input.child.id = 123;
-		input.child.name = 'child';
+		input.child.childname = 'child';
+		input.child.childage = 5;
 		input.child.children = [new TestChild()];
 		input.child.children[0].id = 124;
-		input.child.children[0].name = 'grandchild';
+		input.child.children[0].childname = 'grandchild';
+		input.child.children[0].childage = 17;
 		input.color = new Color(255, 204, 0, 255);
 		const expected = {
 			_type: 'T1',
@@ -156,12 +162,14 @@ describe('JsonObjectMarshaller', () => {
 			child: {
 				_type: 'TC',
 				id: 123,
-				name: 'child',
+				childname: 'child',
+				age: 5,
 				children: [
 					{
 						_type: 'TC',
 						id: 124,
-						name: 'grandchild'
+						childname: 'grandchild',
+						age: 17
 					}
 				]
 			},
@@ -177,7 +185,8 @@ describe('JsonObjectMarshaller', () => {
 		input.child = new TestChild();
 		input.child.children = [undefined, new TestChild()];
 		input.child.children[1].id = 124;
-		input.child.children[1].name = 'grandchild';
+		input.child.children[1].childname = 'grandchild';
+		input.child.children[1].childage = 29;
 		const expected = {
 			_type: 'T1',
 			child: {
@@ -186,7 +195,8 @@ describe('JsonObjectMarshaller', () => {
 					{
 						_type: 'TC',
 						id: 124,
-						name: 'grandchild'
+						childname: 'grandchild',
+						age: 29
 					}
 				]
 			},

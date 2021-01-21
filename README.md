@@ -41,6 +41,12 @@ Bot Marshaller and Unmarshaller
 
 #### Binding annotations
 
+##### Force Classname
+If running minified code, the marshaller is not able to find the class name and adds members to random class descriptors.
+To mitigate or allow multiple classes to be named identical, add a static member to the class:
+
+	static __JSON__CLASSNAME = 'SomeReallyUniqueName';
+
 ##### @JsonElement
 Simple annotation denoting an element to be a json element. Optional, if no renaming of the member is done. and other json annotations are present.
 

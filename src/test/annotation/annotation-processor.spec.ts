@@ -24,10 +24,26 @@ export class ChildClass extends ParentClass {
 	@JsonChild(ChildClass)
 	child?: ChildClass[];
 }
+
 export class SiblingClass extends ParentClass {}
 
 export class UnrelatedClass {
 	anonymous: string;
+}
+
+@JsonTypes(() => [ChildSaveNameClass])
+export class ParentSaveNameClass {
+	static __JSON__CLASSNAME = 'SaveNameParent';
+
+	@JsonElement()
+	parentMember: number;
+}
+
+export class ChildSaveNameClass extends ParentSaveNameClass {
+	static __JSON__CLASSNAME = 'SaveNameChild';
+
+	@JsonElement()
+	childMember: string;
 }
 
 describe('AnnotationProcessor', () => {
@@ -61,6 +77,12 @@ describe('AnnotationProcessor', () => {
 			it('gets name of abstract class', () => {
 				expect((<any>AnnotationProcessor).getClassName(ParentClass.prototype)).toBe('ParentClass');
 			});
+			it('gets save name of class', () => {
+				expect((<any>AnnotationProcessor).getClassName(ChildSaveNameClass.prototype)).toBe('SaveNameChild');
+			});
+			it('gets save name of abstract class', () => {
+				expect((<any>AnnotationProcessor).getClassName(ParentSaveNameClass.prototype)).toBe('SaveNameParent');
+			});
 		});
 		describe('getClassNames', () => {
 			it('gets names of class', () => {
@@ -68,6 +90,15 @@ describe('AnnotationProcessor', () => {
 			});
 			it('gets name of abstract class', () => {
 				xexpect((<any>AnnotationProcessor).getClassNames(new ParentClass())).toBeSameJson(['ParentClass']);
+			});
+			it('gets save names of class', () => {
+				xexpect((<any>AnnotationProcessor).getClassNames(new ChildSaveNameClass()).sort()).toBeSameJson([
+					'SaveNameChild',
+					'SaveNameParent'
+				]);
+			});
+			it('gets save name of abstract class', () => {
+				xexpect((<any>AnnotationProcessor).getClassNames(new ParentSaveNameClass())).toBeSameJson(['SaveNameParent']);
 			});
 		});
 	});
@@ -127,34 +158,25 @@ describe('AnnotationProcessor', () => {
 
 	describe('getMembers', () => {
 		it('returns members', () => {
-			xexpect(AnnotationProcessor.getMembers(ParentClass, {}, false)).toBeSameJson(['imported']);
+			xexpect(AnnotationProcessor.getMembers(ParentClass)).toBeSameJson(['imported']);
 		});
-		it('returns of subclass', () => {
-			xexpect(AnnotationProcessor.getMembers(ChildClass, {}, false)).toBeSameJson(['child', 'imported', 'optional', 'rename']);
+		it('returns members of subclass', () => {
+			xexpect(AnnotationProcessor.getMembers(ChildClass)).toBeSameJson(['child', 'imported', 'optional', 'rename']);
+		});
+		it('returns members of save class', () => {
+			xexpect(AnnotationProcessor.getMembers(ParentSaveNameClass)).toBeSameJson(['parentMember']);
+		});
+		it('returns members of save subclass', () => {
+			xexpect(AnnotationProcessor.getMembers(ChildSaveNameClass)).toBeSameJson(['childMember', 'parentMember']);
 		});
 		it('returns members with unknown member', () => {
-			xexpect(AnnotationProcessor.getMembers(ChildClass, { anonymous: 'a name' }, false)).toBeSameJson([
-				'child',
-				'imported',
-				'optional',
-				'rename'
-			]);
+			xexpect(AnnotationProcessor.getMembers(ChildClass)).toBeSameJson(['child', 'imported', 'optional', 'rename']);
 		});
 		it('returns members with renamed member inverse', () => {
-			xexpect(AnnotationProcessor.getMembers(ChildClass, { renamed: '#123456' }, true)).toBeSameJson([
-				'child',
-				'imported',
-				'optional',
-				'rename'
-			]);
+			xexpect(AnnotationProcessor.getMembers(ChildClass)).toBeSameJson(['child', 'imported', 'optional', 'rename']);
 		});
 		it('returns members with unknown member inverse', () => {
-			xexpect(AnnotationProcessor.getMembers(ChildClass, { anonymous: '#123456' }, true)).toBeSameJson([
-				'child',
-				'imported',
-				'optional',
-				'rename'
-			]);
+			xexpect(AnnotationProcessor.getMembers(ChildClass)).toBeSameJson(['child', 'imported', 'optional', 'rename']);
 		});
 	});
 

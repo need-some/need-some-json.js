@@ -32,7 +32,7 @@ function jsonConvertItem(
 	convert: (converter: anyValue, value: anyValue) => anyValue
 ): anyValue {
 	const jsonTypesTargetParams = AnnotationProcessor.getParams(JsonTypes, type, undefined);
-	let members = AnnotationProcessor.getMembers(type, input, inverse);
+	let members = AnnotationProcessor.getMembers(type);
 	let actualtype = type;
 	// find a subclass converter
 	if (jsonTypesTargetParams && jsonTypesTargetParams.types) {
@@ -63,7 +63,7 @@ function jsonConvertItem(
 			if (subtype !== undefined) {
 				actualtype = subtype;
 				// re-read members of correct subtype
-				members = AnnotationProcessor.getMembers(actualtype, input, inverse);
+				members = AnnotationProcessor.getMembers(actualtype);
 			} else {
 				throw new ConversionError('Wrong discriminator for subtype', (<anyValue>type).name + '/' + discriminatorValue);
 			}

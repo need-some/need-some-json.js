@@ -11,7 +11,8 @@ describe('JsonObjectUnmarshaller', () => {
 			name: 'the name',
 			child: {
 				id: 88,
-				name: 'the child'
+				childname: 'the child',
+				age: 22
 			},
 			mycolor: '#cccc00'
 		};
@@ -22,7 +23,8 @@ describe('JsonObjectUnmarshaller', () => {
 			child: {
 				type: 'TC',
 				id: 88,
-				name: 'the child'
+				childname: 'the child',
+				childage: 22
 			},
 			color: {
 				_string: '#cccc00' //Note that the channels are not precomputed
@@ -40,7 +42,8 @@ describe('JsonObjectUnmarshaller', () => {
 			child: {
 				type: 'TC',
 				id: 88,
-				name: 'the child'
+				childname: 'the child',
+				age: 23
 			},
 			mycolor: '#cccc00'
 		};
@@ -51,7 +54,8 @@ describe('JsonObjectUnmarshaller', () => {
 			child: {
 				type: 'TC',
 				id: 88,
-				name: 'the child'
+				childname: 'the child',
+				childage: 23
 			},
 			color: {
 				_string: '#cccc00' //Note that the channels are not precomputed
@@ -127,11 +131,13 @@ describe('JsonObjectUnmarshaller', () => {
 			name: 'the name',
 			child: {
 				id: 88,
-				name: 'the child',
+				childname: 'the child',
+				age: 82,
 				children: [
 					{
 						id: 99,
-						name: 'the grandchild'
+						childname: 'the grandchild',
+						age: 92
 					}
 				]
 			},
@@ -144,12 +150,14 @@ describe('JsonObjectUnmarshaller', () => {
 			child: {
 				type: 'TC',
 				id: 88,
-				name: 'the child',
+				childname: 'the child',
+				childage: 82,
 				children: [
 					{
 						type: 'TC',
 						id: 99,
-						name: 'the grandchild'
+						childname: 'the grandchild',
+						childage: 92
 					}
 				]
 			},
@@ -168,10 +176,12 @@ describe('JsonObjectUnmarshaller', () => {
 			name: 'the name',
 			child: {
 				id: 88,
-				name: 'the child',
+				childname: 'the child',
+				age: 82,
 				children: {
 					id: 99,
-					name: 'the grandchild'
+					childname: 'the grandchild',
+					age: 92
 				}
 			},
 			mycolor: '#cccc00'
@@ -183,12 +193,14 @@ describe('JsonObjectUnmarshaller', () => {
 			child: {
 				type: 'TC',
 				id: 88,
-				name: 'the child',
+				childname: 'the child',
+				childage: 82,
 				children: [
 					{
 						type: 'TC',
 						id: 99,
-						name: 'the grandchild'
+						childname: 'the grandchild',
+						childage: 92
 					}
 				]
 			},
@@ -227,7 +239,8 @@ describe('JsonObjectUnmarshaller', () => {
 					undefined,
 					{
 						id: 99,
-						name: 'the grandchild'
+						childname: 'the grandchild',
+						age: 92
 					}
 				]
 			},
@@ -241,7 +254,8 @@ describe('JsonObjectUnmarshaller', () => {
 					{
 						type: 'TC',
 						id: 99,
-						name: 'the grandchild'
+						childname: 'the grandchild',
+						childage: 92
 					}
 				]
 			},
