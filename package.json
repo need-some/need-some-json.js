@@ -1,6 +1,6 @@
 {
 	"name": "@need-some/json",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "json binding",
 	"main": "index.js",
 	"types": "index.d.ts",
@@ -19,7 +19,7 @@
 		"url": "git@github.com:need-some/need-some-json.js.git"
 	},
 	"devDependencies": {
-		"@need-some/test": "^0.1.0",
+		"@need-some/test": "^0.1.1",
 		"@types/jasmine": "^3.3.13",
 		"create-ts-index": "^1.0.14",
 		"jasmine-core": "^3.3.0",
@@ -35,7 +35,7 @@
 		"typescript": "^3.2.2"
 	},
 	"dependencies": {
-		"@need-some/basic": "^0.1.1",
+		"@need-some/basic": "^0.1.6",
 		"reflect-metadata": "^0.1.12"
 	},
 	"prettier": {
